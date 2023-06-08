@@ -1,0 +1,12 @@
+database:
+  host: localhost
+  port: 5433
+  username: postgres
+  password: postgres
+  dbname: postgres
+  sslmode: disable
+server:
+  host: "0.0.0.0"
+  port: 8080
+  # Mode is defined as the gin mode being used. Set mode = "release" for production
+  mode: "debug"
