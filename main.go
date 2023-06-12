@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"time"
@@ -21,7 +21,7 @@ func setupRouter() *gin.Engine {
 	userHandler := handlers.NewUserHandler(userService)
 
 	// Public routes (no authentication required)
-	router.POST("/login", userHandler.AuthenticateUserHandler)
+	router.POST("/login", userHandler.AuthenticateUser)
 
 	// Create a new instance of the store layer
 	bookStore := store.NewBookStore()
@@ -35,11 +35,11 @@ func setupRouter() *gin.Engine {
 	protected := router.Group("/api")
 	protected.Use(middleware.AuthMiddleware())
 	{
-		protected.GET("/books", bookHandler.GetBooks)
-		protected.POST("/books", bookHandler.CreateBooks)
-		protected.PUT("/books/:id", bookHandler.UpdateBookByID)
-		protected.DELETE("/books/:id", bookHandler.DeleteBookByID)
-		protected.GET("/books/:id", bookHandler.GetBookByID)
+		protected.GET("/list_books", bookHandler.GetBooks)
+		protected.POST("/book", bookHandler.CreateBook)
+		protected.PUT("/update_book/:id", bookHandler.UpdateBookByID)
+		protected.DELETE("/delete_book/:id", bookHandler.DeleteBookByID)
+		protected.GET("/:id", bookHandler.GetBookByID)
 	}
 
 	return router

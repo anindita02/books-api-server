@@ -8,7 +8,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// updateBook updates a book by its ID
+// UpdateBookByID updates a book.
+// @Summary Updates a book
+// @Description Updates a book with the provided details.
+// @Tags Books
+// @ID                     books-update
+// @Security               ApiKeyAuth
+// @Param  request         body     models.Book  true   "update books request"
+// @Param  id              path     string                                  true   "postgresql id of the book"
+// @Accept                 json
+// @Produce                json
+// @Param  authorization   header   string      true   "authorization token"
+// @Success 200 string    "Book updated successfully"
+// @Failure 400 {object}   map[string]interface{}
+// @Failure 500 {object}   map[string]interface{}
+// @Router /api/update_book/{id} [put]
 func (bH *BookHandler) UpdateBookByID(c *gin.Context) {
 	idStr := c.Param("id") // Get the book ID from the request parameter
 

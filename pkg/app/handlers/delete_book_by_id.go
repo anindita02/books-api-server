@@ -7,6 +7,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// DeleteBookByID deletes a book by its ID
+// @Summary Deletes a book by its ID
+// @Description delete book by ID
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Param  id              path     string                                  true   "postgresql id of the book"
+// @Success 200 string   "Book deleted successfully"
+// @Security ApiKeyAuth
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /api/delete_book/{id} [delete]
 func (bH *BookHandler) DeleteBookByID(c *gin.Context) {
 	idStr := c.Param("id") // Get the book ID from the request parameter
 

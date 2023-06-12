@@ -1,0 +1,244 @@
+definitions:
+  models.Book:
+    properties:
+      author:
+        type: string
+      id:
+        type: integer
+      language:
+        type: string
+      name:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get book by ID
+      operationId: book-by-id
+      parameters:
+      - description: postgresql id of the book
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieves a book by its ID
+      tags:
+      - books
+  /api/book:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new book with the provided details.
+      operationId: books-create
+      parameters:
+      - description: create book request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      - description: authorization token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new book
+      tags:
+      - Books
+  /api/delete_book/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete book by ID
+      parameters:
+      - description: postgresql id of the book
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Deletes a book by its ID
+      tags:
+      - books
+  /api/list_books:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of books.
+      operationId: books-list
+      parameters:
+      - description: authorization token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Book'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get a list of books
+      tags:
+      - Books
+  /api/update_book/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Updates a book with the provided details.
+      operationId: books-update
+      parameters:
+      - description: update books request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      - description: postgresql id of the book
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: authorization token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Updates a book
+      tags:
+      - Books
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user with the provided credentials and generates
+        an access token.
+      parameters:
+      - description: User credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Authenticate user and generate access token
+      tags:
+      - Authentication
+swagger: "2.0"

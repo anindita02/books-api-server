@@ -8,3 +8,5 @@ test:
 generatemocks:
 	rm -rf mocks/* && \
 	mockery --all --keeptree --inpackage;
+swagger:
+	swag init --dir ./ --output ./docs --pd --parseInternal --parseDepth 10  && rm docs/docs.go
