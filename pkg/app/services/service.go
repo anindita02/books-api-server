@@ -9,7 +9,7 @@ import (
 
 // BookService represents the service for managing books
 type BookService struct {
-	store *store.BookStore
+	store store.Store
 }
 
 type Service interface {
@@ -23,7 +23,7 @@ type Service interface {
 var bookService *BookService
 
 // NewBookService creates a new instance of BookService
-func NewBookService(bookStore *store.BookStore) *BookService {
+func NewBookService(bookStore store.Store) *BookService {
 	if bookService == nil {
 		bookService = &BookService{store: bookStore}
 	}

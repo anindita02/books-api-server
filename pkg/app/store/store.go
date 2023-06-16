@@ -40,7 +40,7 @@ func (s *BookStore) Close() error {
 
 // CreateBook creates a new book record
 func (s *BookStore) CreateBook(book *models.Book) error {
-	stmt, err := s.db.Prepare("INSERT INTO books(title, author) VALUES($1, $2) RETURNING id")
+	stmt, err := s.db.Prepare("INSERT INTO books(name, author,year,language) VALUES($1, $2, $3, $4) RETURNING id")
 	if err != nil {
 		return err
 	}
@@ -76,7 +76,7 @@ func (s *BookStore) GetBooks() ([]*models.Book, error) {
 
 // GetBookByID retrieves a book record by its ID
 func (s *BookStore) GetBookByID(id int) (*models.Book, error) {
-	stmt, err := s.db.Prepare("SELECT id, title, author FROM books WHERE id = $1")
+	stmt, err := s.db.Prepare("SELECT id, name, author, year, language FROM books WHERE id = $1")
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (s *BookStore) GetBookByID(id int) (*models.Book, error) {
 
 // UpdateBook updates a book record
 func (s *BookStore) UpdateBook(book *models.Book) error {
-	stmt, err := s.db.Prepare("UPDATE books SET title = $1, author = $2 WHERE id = $3")
+	stmt, err := s.db.Prepare("UPDATE books SET name = $1, author = $2, year=$3, language=$4 WHERE id = $5")
 	if err != nil {
 		return err
 	}
