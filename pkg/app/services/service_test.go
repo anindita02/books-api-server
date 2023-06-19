@@ -59,7 +59,7 @@ func TestCreateBook(t *testing.T) {
 			err := service.CreateBook(tc.book)
 
 			// Assert the result
-			assert.Error(t, err)
+			assert.Error(t, err, "expected an error")
 			assert.Equal(t, tc.expectedErr.Error(), err.Error())
 
 			// Verify the interactions with the mock store
